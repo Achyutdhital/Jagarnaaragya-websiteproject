@@ -1,0 +1,53 @@
+{% extends 'app/base.html' %}
+{% load static %}
+{% block title %}
+Image Gallery
+
+{% endblock %}
+{% block content %}
+
+
+ <!-- Page Header Start -->
+ <div class="container-fluid page-header mb-5 wow fadeIn" data-wow-delay="0.1s">
+    <div class="container text-center">
+        <h1 class="display-4 text-white animated slideInDown mb-4">Image Gallery</h1>
+        <nav aria-label="breadcrumb animated slideInDown">
+            <ol class="breadcrumb justify-content-center mb-0">
+                <li class="breadcrumb-item"><a class="text-white" href="/">Home</a></li>
+                <li class="breadcrumb-item text-primary active" aria-current="page">Image Gallery</li>
+            </ol>
+        </nav>
+    </div>
+</div>
+<!-- Page Header End -->
+
+<!--gallery section start-->
+
+
+<div class="container fancy-gallery mb-5">
+	
+	<div class="row">
+        <div class="bg-light border-bottom border-5 border-primary rounded  mb-4">
+            <p class="text-dark mb-2"><h1 class="display-6 text-center">Welcome to Our Gallery</h1></p>
+        </div>
+        <br>
+		{% for item in gallery %}
+		 <div class="col-6 col-sm-6 col-md-6 col-lg-4 pb-4 item">
+			<a href="{{item.image.url}}" class=" img-fluid"
+            	data-fancybox="images" data-caption="Conference Space" style="height:250px; width: 100%; ">
+		        <img class="rounded" src="{{item.image.url}}" style="height:250px; width: 100%;  object-fit:cover;" alt="" />
+		    </a>
+    	</div>
+		{% endfor %}
+
+
+
+	</div>
+</div>
+<!-- end gallery section-->
+
+
+
+
+
+{% endblock %}

@@ -1,0 +1,70 @@
+{% extends 'app/base.html' %}
+{% load static %}
+{% block title %}
+Blog Details
+{% endblock %}
+{% block content %}
+
+    <!-- Page Header Start -->
+    <div class="container-fluid page-header mb-5 wow fadeIn" data-wow-delay="0.1s">
+        <div class="container text-center">
+            <h1 class="display-4 text-white animated slideInDown mb-4">Blogs</h1>
+            <nav aria-label="breadcrumb animated slideInDown">
+                <ol class="breadcrumb justify-content-center mb-0">
+                    <li class="breadcrumb-item"><a class="text-white" href="/">Home</a></li>
+                    <li class="breadcrumb-item text-primary active" aria-current="page">Blogs</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+    <!-- Page Header End -->
+
+
+   <!-- blog details Start -->
+    <div class="container-xxl ">
+        <div class="container">
+            <div class="row g-5">
+                <div class="col-lg-8 wow fadeInUp" data-wow-delay="0.5s">
+                    <div class="h-100">
+                       
+                        <img class="w-100" src="{{blogdetail.image.url}}" style="object-fit: cover;">
+                        <div class="bg-light border-bottom border-5 border-primary rounded  mb-4">
+                            <p class="text-dark mb-2"><h1 class="display-6 ">{{blogdetail.blog_title}}</h1></p>
+                        </div>
+                        <div class="mb-5"  style="text-align:justify;">{{blogdetail.discriptions|safe}}</div>
+                        
+                        
+                    </div>
+                </div>
+                <div class="col-lg-4 wow fadeInUp" data-wow-delay="0.1s">
+                    <div class="position-relative overflow-hidden " style="">
+                        <div class="bg-light border-bottom border-5 border-primary rounded  mb-4">
+                            <p class="text-dark mb-2"><h1 class="display-6 ">Recent Blogs</h1></p>
+                        </div>
+                    </div>
+                    {% for blog in blogs %}
+                    <div class="row">
+                        <div class="col-4 col-sm-4 col-md-4 ">
+                            <img src="{{blog.image.url}}" style="height:100px; width:100%; object-fit:cover;">
+                        </div>
+                        <div class="col-8 col-sm-8 col-md-8">
+                            <a href="{% url 'blogdetail' blog.act_slug %}" class="text-dark text-bold" >
+                                <b>{{blog.blog_title}}</b>
+                            </a>
+                            <div  style="text-align:justify;">
+                                {{blog.discriptions|safe|truncatewords:15}}
+                                <a href="{% url 'blogdetail' blog.act_slug %}">Read more</a>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+
+                </div>
+               
+            </div>
+        </div>
+    </div>
+<!--  End blog deatils -->
+        
+
+   {% endblock %}

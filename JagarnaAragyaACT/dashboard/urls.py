@@ -1,0 +1,37 @@
+from django.urls import path
+from . import views
+app_name= 'dashboard'
+
+urlpatterns = [
+    path('',views.login, name='login'),
+    path('index',views.index, name='index'),
+    path('logout',views.userlogout, name='logout'),
+    path('about', views.aboutus, name='about'),
+    path('managing-director', views.managingdirecory, name='mdmessage'),
+    path('managing-director/update', views.udate_md, name='mdupdate'),
+    path('blog', views.blogs, name='blog'),
+    path('blog/create', views.createblog, name='create_new_blog'),
+    path('blog/view/<slug:slug>', views.viewblog, name='view_blog'),
+    path('blog/update/<slug:slug>', views.blogupdate, name='blogupdate'),
+    path('blog/delete/<slug:slug>', views.delete_blog, name='delete_blog'),
+    path('notices', views.notice, name='notice'),
+    path('notices/create', views.notice_create, name='notice_create'),
+    path('notice/view/<slug:slug>', views.notice_view, name= 'notice_view'),
+    path('notice/update/<slug:slug>', views.notice_edit, name='notice_update'),
+    path('notice/delete/<slug:slug>', views.delete_notice, name="delete_notice"),
+    path('team/members', views.team_members, name='team_members'),
+    path('team/members/add/new',views.add_new_member, name="add_new_member" ),
+    path('team/member/update', views.update_member, name='update_mem_info'),
+    path('team/member/delete', views.delete_member, name='member_delete'),
+    path('contact', views.contact, name='contact'),
+    path('gallery', views.gallery, name='gallery'),
+    path('gallery/delete', views.delete_image, name='delete_image'),
+    path('gallery/add/image', views.addnewimage, name='add_new_image'),
+    path('video-gallery', views.videogallery, name='videogallery'),
+    path('video/delete', views.delete_video, name='delete_video'),
+    path('bannarimage', views.bannarimage, name='bannarimage'),
+    path('bannarimage/add', views.addbannarimage, name='new_bannar_image'),
+    path('bannarimage/delete', views.deletebannarimage, name='deleteimage'),
+    path('customer-queries', views.customerquery, name='customer-queries'),
+    path('delete-customer-queries', views.delete_quries, name='delete-customer-queries'),
+]

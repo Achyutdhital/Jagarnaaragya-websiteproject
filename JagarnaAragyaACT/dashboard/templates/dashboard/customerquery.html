@@ -1,0 +1,231 @@
+{% extends 'dashboard/base.html' %}
+{% load static %}
+{% block title %}
+Customer Queries
+{% endblock %}
+{% block content %}
+
+<!-- table start-->
+<div class="main-content">
+  <section class="section">
+    <div class="section-body">
+     
+      <div class="row">
+        <div class="col-12">
+          <div class="card">
+            <div class="card-header">
+              <h4>Customer Queries</h4>
+              
+              <div class="card-header-form">
+                
+                <form>
+                  <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Search">
+                    <div class="input-group-btn">
+                      <button class="btn btn-primary"><i class="fas fa-search"></i></button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+
+              
+            </div>
+            {% if messages %}
+              {% for msg in messages %}
+                  <div class="alert alert-{{msg.tags}} alert-dismissible show fade">
+                    <div class="alert-body">
+                      <button class="close" data-dismiss="alert">
+                        <span>×</span>
+                      </button>
+                      {{msg.message}}
+                    </div>
+                  </div>
+                  
+              {% endfor %}
+            {% endif %}
+            <div class="card-body p-0">
+              <div class="table-responsive">
+                <table class="table table-striped">
+                  <tr>
+                    <th class="text-center">
+                      S.N
+                    </th>
+                    <th>Name </th>
+                    <th>Email</th>
+                    <th>Subject </th>
+                    <th>Message</th>
+                    <th>Action</th>
+                  </tr>
+                  {% for item in customer_queries %}
+                  <tr class="pt-4">
+                    <td class="p-0 text-center">
+                      {{forloop.counter}}
+                    </td>
+                    <td>{{item.fullname}}</td>
+                    
+                    <td>{{item.email}}</td>
+                    <td>{{item.subject}}</td>
+                    <td >{{item.message}} </td>
+                   
+                    <td>
+
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#ModelView{{item.id}}">
+                        <i class="fas fa-eye"></i>
+                    </button>
+                    
+                    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#basicModal{{item.id}}">
+                        <i class="fas fa-pen"></i>
+                    </button>
+
+                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteModel{{item.id}}">
+                        <i class="fas fa-trash "></i>
+                    </button>
+                     
+                    </td>
+                  </tr>
+                  {% endfor %}
+
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+    
+    </div>
+     
+  </section>
+  
+</div>
+
+
+<!-- end table-->
+
+
+     <!-- basic modal -->
+     {% for querie  in  customer_queries %}
+     <div class="modal fade" id="basicModal{{querie.id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+         <div class="modal-dialog" role="document">
+             <div class="modal-content">
+             <div class="modal-header">
+                 <h5 class="modal-title" id="exampleModalLabel">Reply to Customer</h5>
+                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                 <span aria-hidden="true">&times;</span>
+                 </button>
+             </div>
+             <div class="modal-body">
+                 <form class="{% url 'dashboard:customer-queries' %}" method="post" action="#" enctype="multipart/form-data">
+                     {% csrf_token %}
+                     <div class="form-group">
+                         <input type="hidden"  value="{{querie.id}}" name="queriesid">
+
+                         <div class="input-group pt-2">
+                             <input type="text" class="form-control" name="subject" placeholder="Subject" name="subject" >
+                          </div>
+
+                          <div class="input-group pt-2">
+                            <textarea class="summernote" name="messages" placeholder="messages" >
+                                Type your Message here...
+                            </textarea>
+                          </div>
+                     </div>
+                     
+                         
+                         
+                     <div class="modal-footer bg-whitesmoke br">
+                         <button type="submit" class="btn btn-primary">Send</button>
+                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                     </div>
+                   </form>
+             </div>
+             
+             </div>
+         </div>
+     </div>
+     {% endfor %}
+
+
+
+      <!-- view modal -->
+      {% for querie  in  customer_queries %}
+      <div class="modal fade" id="ModelView{{querie.id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+      aria-hidden="true">
+          <div class="modal-dialog" role="document">
+              <div class="modal-content">
+              <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">Customer Queries</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                  </button>
+              </div>
+              <div class="modal-body">
+                  <form class="#" method="post" action="#" enctype="multipart/form-data">
+                      {% csrf_token %}
+                      <div class="form-group">
+                         
+                        <div class="input-group pt-2">
+                            <input type="text" class="form-control" name="subject" placeholder="Subject" value="{{querie.fullname}}" disabled >
+                         </div>
+                        <div class="input-group pt-2">
+                            <input type="text" class="form-control" name="subject" placeholder="Subject" value="{{querie.email}}" disabled >
+                         </div>
+
+                          <div class="input-group pt-2">
+                              <input type="text" class="form-control" name="subject" placeholder="Subject" value="{{querie.subject}}" disabled>
+                           </div>
+ 
+                           <div class="input-group pt-2">
+                             <textarea disabled class="form-control" rows="3">
+                                {{querie.message}}
+                             </textarea>
+                           </div>
+                      </div>
+                      
+                          
+                          
+                      <div class="modal-footer bg-whitesmoke br">
+                          <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                      </div>
+                    </form>
+              </div>
+              
+              </div>
+          </div>
+      </div>
+      {% endfor %}
+
+
+      <!-- delete queires-->
+   {% for queries  in  customer_queries %}
+   <div class="modal fade" id="deleteModel{{queries.id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+   aria-hidden="true">
+       <div class="modal-dialog" role="document">
+           <div class="modal-content">
+           <div class="modal-header">
+               <h5 class="modal-title" id="exampleModalLabel">Delete Customer querie</h5>
+               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+               <span aria-hidden="true">&times;</span>
+               </button>
+           </div>
+           <div class="modal-body">
+               <form class="" method="post" action="{% url 'dashboard:delete-customer-queries' %}" enctype="multipart/form-data">
+                   {% csrf_token %}
+                   <input type="hidden"  value="{{queries.id}}" name="queiresid">
+                   <h4 class="text-warning">Are you sure?</h4>
+                   <div class="modal-footer bg-whitesmoke br">
+                       <button type="submit" class="btn btn-primary">Yes</button>
+                       <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                   </div>
+                 </form>
+           </div>
+           
+           </div>
+       </div>
+   </div>
+   {% endfor %}
+
+
+
+{% endblock %}
